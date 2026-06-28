@@ -7,6 +7,11 @@ steps:
     id: 'Initialization'
     args: ['echo', 'Foundational Cloud Build Pipeline initialized successfully.']
 
+  # Step 2: Run all Bazel tests across the monorepo
+  - name: 'gcr.io/cloud-builders/bazel'
+    id: 'Bazel Test'
+    args: ['test', '//...']
+
 # Global Build Options
 options:
   # Use a larger machine type for Bazel builds
