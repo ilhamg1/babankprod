@@ -25,10 +25,17 @@ steps:
     entrypoint: 'npx'
     args: ['ng', 'lint']
 
-  # Step 4: Run all Bazel tests across the monorepo
+  # Step 4: Run all Bazel tests and generate coverage across the monorepo
   - name: 'gcr.io/cloud-builders/bazel'
-    id: 'Bazel Test'
-    args: ['test', '//...']
+    id: 'Bazel Test & Coverage'
+    args: ['coverage', '--remote_cache=https://storage.googleapis.com/babankprod-bazel-cache', '//...']
+
+# Publish Test Coverage Reports as Artifacts
+artifacts:
+  objects:
+    location: 'gs://babankprod-bazel-cache/coverage-reports/$BUILD_ID'
+    paths:
+      - 'bazel-testlogs/**/coverage.dat'
 
 # Global Build Options
 options:
