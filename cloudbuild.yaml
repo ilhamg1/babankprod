@@ -1,0 +1,18 @@
+# cloudbuild.yaml
+# Foundation for the Babank CI Pipeline
+
+steps:
+  # Step 1: Baseline initialization to verify execution environment
+  - name: 'ubuntu'
+    id: 'Initialization'
+    args: ['echo', 'Foundational Cloud Build Pipeline initialized successfully.']
+
+# Global Build Options
+options:
+  # Use a larger machine type for Bazel builds
+  machineType: 'E2_HIGHCPU_8'
+  # Stream logs directly to Google Cloud Logging
+  logging: CLOUD_LOGGING_ONLY
+
+# Build Timeout (1 hour)
+timeout: 3600s
