@@ -7,7 +7,25 @@ steps:
     id: 'Initialization'
     args: ['echo', 'Foundational Cloud Build Pipeline initialized successfully.']
 
-  # Step 2: Run all Bazel tests across the monorepo
+  # Step 2: Run Go Static Analysis (golangci-lint)
+  - name: 'golangci/golangci-lint:v1.59.0'
+    id: 'Go Lint'
+    args: ['golangci-lint', 'run', './...']
+
+  # Step 3: Run Angular ESLint
+  - name: 'node:20'
+    id: 'Angular Dependencies'
+    dir: 'apps/web'
+    entrypoint: 'npm'
+    args: ['install']
+
+  - name: 'node:20'
+    id: 'Angular Lint'
+    dir: 'apps/web'
+    entrypoint: 'npx'
+    args: ['ng', 'lint']
+
+  # Step 4: Run all Bazel tests across the monorepo
   - name: 'gcr.io/cloud-builders/bazel'
     id: 'Bazel Test'
     args: ['test', '//...']
