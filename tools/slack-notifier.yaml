@@ -1,0 +1,13 @@
+apiVersion: cloud-build-notifiers/v1
+kind: SlackNotifier
+metadata:
+  name: babankprod-slack-notifier
+spec:
+  notification:
+    # This filter ensures notifications are ONLY sent when a CI build fails
+    filter: build.status == Build.Status.FAILURE
+    delivery:
+      webhookUrl:
+        secretRef: projects/project-a4db4cf4-7683-40b8-9ce/secrets/slack-webhook/versions/latest
+secrets:
+- name: projects/project-a4db4cf4-7683-40b8-9ce/secrets/slack-webhook/versions/latest
