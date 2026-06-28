@@ -1,0 +1,16 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix babank
+gazelle(name = "gazelle")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files([
+    "package.json",
+    "WORKSPACE.bazel",
+])
+
+filegroup(
+    name = "all_files",
+    srcs = glob(["*"]),
+)

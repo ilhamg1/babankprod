@@ -1,0 +1,15 @@
+# Standard build flags
+build --symlink_prefix=bazel-
+build --experimental_strict_action_env=true
+build --incompatible_strict_action_env=true
+
+# Test configurations
+test --test_output=errors
+test --test_summary=detailed
+
+# Output configurations
+build --color=yes
+build --show_progress_rate_limit=0.2
+
+# Remote caching configuration (Placeholder)
+# build --remote_cache=grpc://remote.cache.server:port

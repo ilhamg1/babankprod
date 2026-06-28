@@ -1,0 +1,20 @@
+{
+  "name": "babank",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Babank: AI-Powered Quiz Generator",
+  "scripts": {
+    "build": "bazel build //...",
+    "test": "bazel test //..."
+  },
+  "devDependencies": {
+    "@angular-eslint/eslint-plugin": "^22.0.0",
+    "@angular-eslint/eslint-plugin-template": "^22.0.0",
+    "@angular-eslint/template-parser": "^22.0.0",
+    "@bazel/bazelisk": "^1.19.0",
+    "@typescript-eslint/eslint-plugin": "^8.62.0",
+    "@typescript-eslint/parser": "^8.62.0",
+    "eslint": "^10.6.0",
+    "gts": "^7.0.0"
+  }
+}

@@ -1,0 +1,40 @@
+linters-settings:
+  govet:
+    enable-all: true
+    disable:
+      - fieldalignment
+  gocyclo:
+    min-complexity: 15
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+
+linters:
+  disable-all: true
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - typecheck
+    - goimports
+    - gofmt
+    - misspell
+    - unparam
+    - unconvert
+    - gocyclo
+    - gocritic
+    - gosec
+
+run:
+  timeout: 5m
+  tests: true
+  skip-dirs:
+    - vendor
+    - node_modules
+    - bazel-*
+
+issues:
+  exclude-use-default: false

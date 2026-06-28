@@ -1,0 +1,26 @@
+# Auto-detect text files, ensure they have LF endings on checkout on Linux/Mac,
+# and CRLF on Windows, but always LF in the repository.
+* text=auto eol=lf
+
+# Explicitly declare text files you want to always be normalized and converted
+*.ts text
+*.js text
+*.html text
+*.css text
+*.scss text
+*.json text
+*.md text
+*.bazel text
+*.bzl text
+*.go text
+*.yaml text
+*.yml text
+*.sh text eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary

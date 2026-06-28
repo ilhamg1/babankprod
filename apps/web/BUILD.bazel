@@ -1,0 +1,48 @@
+load("@bazel_concatjs//:index.bzl", "concatjs_devserver", "karma_web_test")
+load("@npm//@bazel/typescript:index.bzl", "ts_library")
+# This is a placeholder BUILD.bazel for the wrapped Angular CLI configuration.
+# The @bazel/concatjs package is used here to define the Bazel build targets 
+# for the Angular application, replacing the standard Angular CLI build pipeline.
+
+package(default_visibility = ["//visibility:public"])
+
+ts_library(
+    name = "app",
+    srcs = glob(["src/**/*.ts"], exclude=["src/**/*.spec.ts"]),
+    tsconfig = "//apps/web:tsconfig.app.json",
+    deps = [
+        # Angular dependencies will be mapped here
+    ],
+)
+
+concatjs_devserver(
+    name = "serve",
+    deps = [":app"],
+    port = 4200,
+    serving_path = "/bundle.js",
+    static_files = [
+        "src/index.html",
+        "src/styles.scss",
+        "src/favicon.ico",
+    ],
+)
+
+ts_library(
+    name = "test_lib",
+    srcs = glob(["src/**/*.spec.ts"]),
+    tsconfig = "//apps/web:tsconfig.spec.json",
+    deps = [
+        ":app",
+        # Test dependencies (e.g. @types/jasmine) will be mapped here
+    ],
+)
+
+karma_web_test(
+    name = "test",
+    srcs = [
+        # karma config, test setup files
+    ],
+    deps = [
+        ":test_lib",
+    ],
+)
