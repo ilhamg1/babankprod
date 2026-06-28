@@ -16,7 +16,7 @@ func setupRouter() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, "OK")
+		_, _ = fmt.Fprint(w, "OK")
 	})
 	return mux
 }
@@ -28,8 +28,9 @@ func main() {
 
 	port := ":8080"
 	server := &http.Server{
-		Addr:    port,
-		Handler: setupRouter(),
+		Addr:              port,
+		Handler:           setupRouter(),
+		ReadHeaderTimeout: 5 * time.Second,
 	}
 
 	// Channel to listen for errors coming from the listener
@@ -54,7 +55,7 @@ func main() {
 		}
 	case sig := <-shutdown:
 		slog.Info("Starting graceful shutdown", "signal", sig)
-		
+
 		// Create a context with a timeout for the shutdown process
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
@@ -62,11 +63,12 @@ func main() {
 		// Attempt graceful shutdown
 		if err := server.Shutdown(ctx); err != nil {
 			slog.Error("Graceful shutdown failed", "error", err)
-			
+
 			// Force shutdown
 			if err := server.Close(); err != nil {
 				slog.Error("Force shutdown failed", "error", err)
 			}
+			cancel()
 			os.Exit(1)
 		}
 		slog.Info("Server stopped gracefully")
